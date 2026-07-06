@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:syarah_app_task/core/helpers/dimensions/dimensions.dart';
 import 'package:syarah_app_task/core/helpers/extensions/snack_bar_extension.dart';
+import 'package:syarah_app_task/core/helpers/extensions/text_styles_extension.dart';
 import 'package:syarah_app_task/core/helpers/extensions/widget_extensions.dart';
 import 'package:syarah_app_task/core/helpers/functions/network_error_helper.dart';
 import 'package:syarah_app_task/core/network/network_exception.dart';
@@ -163,43 +165,153 @@ class _AddEditTodoViewState extends ConsumerState<AddEditTodoView> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomTextFormField(
-                  controller: _titleController,
-                  labelText: 'Todo title',
-                  hintText: 'Enter the todo title',
-                  textInputAction: TextInputAction.done,
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Title is required';
-                    }
-                    return null;
-                  },
-                ),
-                verticalSpacing(kSpacingS),
-                SwitchListTile(
-                  value: _completed,
-                  onChanged: (value) => setState(() => _completed = value),
-                  title: const Text('Completed'),
-                  activeThumbColor: ColorManager.primary,
-                  contentPadding: EdgeInsets.zero,
-                ),
-                verticalSpacing(kSpacingL),
-                CustomButton(
-                  label: _isEdit ? 'Save Changes' : 'Add Todo',
-                  icon: Icons.check_rounded,
-                  isLoading: _isSaving,
-                  onPressed: _save,
-                ),
-              ],
-            ).allPadding(),
+          physics: const BouncingScrollPhysics(),
+          child: TweenAnimationBuilder<double>(
+            duration: const Duration(milliseconds: 350),
+            curve: Curves.easeOutCubic,
+            tween: Tween<double>(begin: 0, end: 1),
+            builder: (context, value, child) => Opacity(
+              opacity: value,
+              child: Transform.translate(
+                offset: Offset(0, (1 - value) * 24.h),
+                child: child,
+              ),
+            ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildHeader(context),
+                  verticalSpacing(kSpacingXL),
+                  _buildFormCard(context),
+                  verticalSpacing(kSpacingXL),
+                  CustomButton(
+                    label: _isEdit ? 'Save Changes' : 'Add Todo',
+                    icon: Icons.check_rounded,
+                    isLoading: _isSaving,
+                    onPressed: _save,
+                  ),
+                ],
+              ).allPadding(),
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 56.r,
+          height: 56.r,
+          decoration: BoxDecoration(
+            color: ColorManager.primary.withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(kRadiusL.r),
+          ),
+          child: Icon(
+            _isEdit ? Icons.edit_note_rounded : Icons.playlist_add_rounded,
+            color: ColorManager.primary,
+            size: kIconM.r,
+          ),
+        ),
+        SizedBox(width: kSpacingL.w),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _isEdit ? 'Edit your todo' : 'Create a new todo',
+                style: context.headingH5,
+              ),
+              SizedBox(height: kSpacingXXS.h),
+              Text(
+                _isEdit
+                    ? 'Update the details below'
+                    : 'What would you like to get done?',
+                style: context.bodySmall?.copyWith(
+                  color: ColorManager.textSecondary,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFormCard(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(kSpacingL.w),
+      decoration: BoxDecoration(
+        color: ColorManager.surface,
+        borderRadius: BorderRadius.circular(kRadiusL.r),
+        border: Border.all(color: ColorManager.border),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CustomTextFormField(
+            controller: _titleController,
+            labelText: 'Todo title',
+            hintText: 'Enter the todo title',
+            textInputAction: TextInputAction.done,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Title is required';
+              }
+              return null;
+            },
+          ),
+          verticalSpacing(kSpacingL),
+          Divider(color: ColorManager.border, height: 1.h),
+          verticalSpacing(kSpacingM),
+          _buildCompletedToggle(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCompletedToggle(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          _completed
+              ? Icons.check_circle_rounded
+              : Icons.radio_button_unchecked_rounded,
+          color: _completed
+              ? ColorManager.success
+              : ColorManager.textSecondary,
+          size: kIconM.r,
+        ),
+        SizedBox(width: kSpacingM.w),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Completed',
+                style: context.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Text(
+                'Mark this todo as done',
+                style: context.bodySmall?.copyWith(
+                  color: ColorManager.textSecondary,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Switch.adaptive(
+          value: _completed,
+          onChanged: (value) => setState(() => _completed = value),
+          activeThumbColor: ColorManager.primary,
+        ),
+      ],
     );
   }
 }
