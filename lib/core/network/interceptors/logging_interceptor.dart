@@ -1,0 +1,44 @@
+import 'dart:developer' as developer;
+
+import 'package:dio/dio.dart';
+
+/// Lightweight request/response/error logger.
+class LoggingInterceptor extends Interceptor {
+  @override
+  void onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) {
+    developer.log(
+      '--> ${options.method} ${options.uri}',
+      name: 'network',
+    );
+    handler.next(options);
+  }
+
+  @override
+  void onResponse(
+    Response<dynamic> response,
+    ResponseInterceptorHandler handler,
+  ) {
+    developer.log(
+      '<-- ${response.statusCode} ${response.requestOptions.uri}',
+      name: 'network',
+    );
+    handler.next(response);
+  }
+
+  @override
+  void onError(
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) {
+    developer.log(
+      '<-- ERROR ${err.response?.statusCode} '
+      '${err.requestOptions.uri}',
+      name: 'network',
+      error: err,
+    );
+    handler.next(err);
+  }
+}
