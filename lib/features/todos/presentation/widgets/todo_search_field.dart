@@ -15,7 +15,7 @@ class TodoSearchField extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: kSpacingS.h),
       child: CustomTextFormField(
-        hintText: 'ابحث في المهام...',
+        hintText: 'Search todos...',
         onChanged: onChanged,
         textInputAction: TextInputAction.search,
         prefixIcon: Icon(

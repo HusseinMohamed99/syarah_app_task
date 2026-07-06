@@ -27,7 +27,7 @@ class TodoApp extends ConsumerWidget {
         themeMode: ThemeMode.system,
         routerConfig: router,
         builder: (context, child) => Directionality(
-          textDirection: TextDirection.rtl,
+          textDirection: TextDirection.ltr,
           child: child ?? const SizedBox.shrink(),
         ),
       ),

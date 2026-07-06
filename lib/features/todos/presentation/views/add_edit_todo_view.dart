@@ -82,7 +82,7 @@ class _AddEditTodoViewState extends ConsumerState<AddEditTodoView> {
       return;
     }
     context.showSnackBar(
-      message: _isEdit ? 'تم تحديث المهمة' : 'تمت إضافة المهمة',
+      message: _isEdit ? 'Todo updated' : 'Todo added',
       type: SnackBarType.success,
     );
     context.pop();
@@ -95,17 +95,17 @@ class _AddEditTodoViewState extends ConsumerState<AddEditTodoView> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('حذف المهمة'),
-        content: const Text('هل أنت متأكد من حذف هذه المهمة؟'),
+        title: const Text('Delete todo'),
+        content: const Text('Are you sure you want to delete this todo?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: const Text('إلغاء'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
             child: const Text(
-              'حذف',
+              'Delete',
               style: TextStyle(color: ColorManager.error),
             ),
           ),
@@ -125,7 +125,7 @@ class _AddEditTodoViewState extends ConsumerState<AddEditTodoView> {
       return;
     }
     context.showSnackBar(
-      message: 'تم حذف المهمة',
+      message: 'Todo deleted',
       type: SnackBarType.success,
     );
     context.pop();
@@ -133,13 +133,13 @@ class _AddEditTodoViewState extends ConsumerState<AddEditTodoView> {
 
   @override
   Widget build(BuildContext context) {
-    final title = _isEdit ? 'تعديل المهمة' : 'إضافة مهمة';
+    final title = _isEdit ? 'Edit Todo' : 'Add Todo';
 
     if (_isEdit && _existing == null) {
       return Scaffold(
         appBar: basicAppBar(context, title: title, showBackButton: true),
         body: const MissingDataView(
-          title: 'المهمة غير موجودة',
+          title: 'Todo not found',
           icon: Icons.error_outline_rounded,
         ),
       );
@@ -170,12 +170,12 @@ class _AddEditTodoViewState extends ConsumerState<AddEditTodoView> {
               children: [
                 CustomTextFormField(
                   controller: _titleController,
-                  labelText: 'عنوان المهمة',
-                  hintText: 'اكتب عنوان المهمة',
+                  labelText: 'Todo title',
+                  hintText: 'Enter the todo title',
                   textInputAction: TextInputAction.done,
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
-                      return 'العنوان مطلوب';
+                      return 'Title is required';
                     }
                     return null;
                   },
@@ -184,13 +184,13 @@ class _AddEditTodoViewState extends ConsumerState<AddEditTodoView> {
                 SwitchListTile(
                   value: _completed,
                   onChanged: (value) => setState(() => _completed = value),
-                  title: const Text('مكتملة'),
+                  title: const Text('Completed'),
                   activeThumbColor: ColorManager.primary,
                   contentPadding: EdgeInsets.zero,
                 ),
                 verticalSpacing(kSpacingL),
                 CustomButton(
-                  label: _isEdit ? 'حفظ التغييرات' : 'إضافة',
+                  label: _isEdit ? 'Save Changes' : 'Add Todo',
                   icon: Icons.check_rounded,
                   isLoading: _isSaving,
                   onPressed: _save,

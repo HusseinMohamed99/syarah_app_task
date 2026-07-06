@@ -41,7 +41,7 @@ class _TodoListViewState extends ConsumerState<TodoListView> {
     if (!mounted) return;
     if (error == null) {
       context.showSnackBar(
-        message: 'تم حذف المهمة',
+        message: 'Todo deleted',
         type: SnackBarType.success,
       );
     } else {
@@ -62,7 +62,7 @@ class _TodoListViewState extends ConsumerState<TodoListView> {
     final state = ref.watch(todoListProvider);
 
     return Scaffold(
-      appBar: basicAppBar(context, title: 'المهام'),
+      appBar: basicAppBar(context, title: 'My Todos'),
       floatingActionButton: FloatingActionButton(
         onPressed: () => const AddTodoRoute().safePush(context),
         backgroundColor: ColorManager.primary,
@@ -99,8 +99,8 @@ class _TodoListViewState extends ConsumerState<TodoListView> {
         if (state.isEmpty) {
           return _refreshableSingle(
             const MissingDataView(
-              title: 'لا توجد مهام بعد',
-              subtitle: 'أضف مهمتك الأولى بالضغط على زر الإضافة',
+              title: 'No todos yet',
+              subtitle: 'Add your first todo using the button below',
               icon: Icons.checklist_rtl_rounded,
             ),
           );
@@ -108,8 +108,8 @@ class _TodoListViewState extends ConsumerState<TodoListView> {
         if (state.hasNoSearchResults) {
           return _refreshableSingle(
             const MissingDataView(
-              title: 'لا توجد نتائج',
-              subtitle: 'جرّب كلمة بحث مختلفة',
+              title: 'No results found',
+              subtitle: 'Try a different search term',
               icon: Icons.search_off_rounded,
             ),
           );

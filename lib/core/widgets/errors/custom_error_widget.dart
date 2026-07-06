@@ -9,7 +9,7 @@ class CustomErrorWidget extends StatelessWidget {
   const CustomErrorWidget({
     required this.message,
     this.onRetry,
-    this.retryLabel = 'إعادة المحاولة',
+    this.retryLabel = 'Retry',
     super.key,
   });
 

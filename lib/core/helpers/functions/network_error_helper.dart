@@ -5,27 +5,27 @@ import 'package:syarah_app_task/core/network/network_exception.dart';
 /// This project has no localization layer, so plain strings are used.
 String getNetworkErrorMessage(
   Object error, {
-  String fallbackKey = 'حدث خطأ غير متوقع، حاول مرة أخرى',
+  String fallbackKey = 'Something went wrong. Please try again.',
 }) {
   if (error is! NetworkException) return fallbackKey;
 
   return switch (error) {
-    RequestCancelled() => 'تم إلغاء الطلب',
-    UnauthorizedRequest() => 'غير مصرّح لك بالوصول',
-    BadRequest() => 'طلب غير صالح',
-    NotFound() => 'لم يتم العثور على البيانات المطلوبة',
-    RequestTimeout() => 'انتهت مهلة الاتصال، حاول مرة أخرى',
-    SendTimeout() => 'انتهت مهلة إرسال البيانات',
-    Forbidden() => 'ليس لديك صلاحية للوصول',
-    Conflict() => 'يوجد تعارض في البيانات',
-    InternalServerError() => 'حدث خطأ في الخادم، حاول لاحقًا',
-    ServiceUnavailable() => 'الخدمة غير متوفرة حاليًا',
-    NoInternetConnection() => 'لا يوجد اتصال بالإنترنت',
-    FormatFailure() => 'صيغة البيانات غير صحيحة',
-    UnableToProcess() => 'تعذّر معالجة البيانات',
+    RequestCancelled() => 'The request was cancelled.',
+    UnauthorizedRequest() => 'You are not authorized to access this.',
+    BadRequest() => 'Invalid request.',
+    NotFound() => 'The requested data could not be found.',
+    RequestTimeout() => 'Connection timed out. Please try again.',
+    SendTimeout() => 'Sending data timed out.',
+    Forbidden() => 'You do not have permission to access this.',
+    Conflict() => 'There is a conflict in the data.',
+    InternalServerError() => 'A server error occurred. Please try later.',
+    ServiceUnavailable() => 'The service is currently unavailable.',
+    NoInternetConnection() => 'No internet connection.',
+    FormatFailure() => 'The data format is invalid.',
+    UnableToProcess() => 'Unable to process the data.',
     DefaultError(:final message) => message,
     UnexpectedError() => fallbackKey,
     Unknown() => fallbackKey,
-    Locked() => 'الحساب مقفل مؤقتًا',
+    Locked() => 'The account is temporarily locked.',
   };
 }
