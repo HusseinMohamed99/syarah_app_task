@@ -11,6 +11,7 @@ import 'package:syarah_app_task/core/routing/app_router.dart';
 import 'package:syarah_app_task/core/theming/colorManager/color_manager.dart';
 import 'package:syarah_app_task/core/widgets/appbar/basic_app_bar.dart';
 import 'package:syarah_app_task/core/widgets/errors/custom_error_widget.dart';
+import 'package:syarah_app_task/core/widgets/loading/adaptive_loading_indicator.dart';
 import 'package:syarah_app_task/core/widgets/missing_data/missing_data_view.dart';
 import 'package:syarah_app_task/features/todos/data/model/todo_model.dart';
 import 'package:syarah_app_task/features/todos/presentation/controller/notifier/todo_list_notifier.dart';
@@ -28,8 +29,35 @@ class TodoListView extends ConsumerStatefulWidget {
 }
 
 class _TodoListViewState extends ConsumerState<TodoListView> {
+  final _scrollController = ScrollController();
+
+  /// Distance from the bottom at which the next page is requested.
+  static const double _loadMoreThreshold = 300;
+
   TodoListNotifier get _notifier =>
       ref.read(todoListProvider.notifier);
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    final position = _scrollController.position;
+    if (position.pixels >=
+        position.maxScrollExtent - _loadMoreThreshold.h) {
+      _notifier.loadMore();
+    }
+  }
 
   Future<void> _onToggle(TodoModel todo) async {
     final error = await _notifier.toggleCompleted(todo);
@@ -114,21 +142,28 @@ class _TodoListViewState extends ConsumerState<TodoListView> {
             ),
           );
         }
-        return _buildList(state.filteredTodos);
+        return _buildList(state);
     }
   }
 
-  Widget _buildList(List<TodoModel> todos) {
+  Widget _buildList(TodoListState state) {
+    final todos = state.filteredTodos;
+    final showBottomLoader = state.isLoadingMore;
+
     return RefreshIndicator(
       onRefresh: _notifier.refresh,
       child: ListView.builder(
+        controller: _scrollController,
         physics: const AlwaysScrollableScrollPhysics(),
         padding: EdgeInsets.symmetric(
           horizontal: kScreenPadding.w,
           vertical: kSpacingS.h,
         ),
-        itemCount: todos.length,
+        itemCount: todos.length + (showBottomLoader ? 1 : 0),
         itemBuilder: (context, index) {
+          if (index >= todos.length) {
+            return const _BottomLoader();
+          }
           final todo = todos[index];
           return TodoListItem(
             todo: todo,
@@ -154,6 +189,20 @@ class _TodoListViewState extends ConsumerState<TodoListView> {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Small centered spinner shown at the bottom of the list while the next
+/// page is being fetched.
+class _BottomLoader extends StatelessWidget {
+  const _BottomLoader();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: kSpacingL.h),
+      child: const Center(child: AdaptiveLoadingIndicator()),
     );
   }
 }

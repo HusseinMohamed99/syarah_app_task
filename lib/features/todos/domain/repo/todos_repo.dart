@@ -6,8 +6,11 @@ import 'package:syarah_app_task/features/todos/data/model/todo_model.dart';
 /// Implemented by `TodosRepoImpl` in the data layer; consumed directly by
 /// presentation notifiers (no separate use-case layer).
 abstract interface class TodosRepo {
-  /// Fetches all todos.
-  Future<ApiResult<List<TodoModel>>> getTodos();
+  /// Fetches a single page of todos ([page] is 1-based).
+  Future<ApiResult<List<TodoModel>>> getTodos({
+    required int page,
+    required int limit,
+  });
 
   /// Creates a todo. jsonplaceholder echoes the created item back.
   Future<ApiResult<TodoModel>> createTodo({

@@ -6,4 +6,7 @@ class AppConstants {
   static const Duration networkTimeout = Duration(seconds: 120);
 
   static const String todosEndpoint = '/todos';
+
+  /// Number of todos fetched per page for infinite scroll.
+  static const int todosPageLimit = 20;
 }

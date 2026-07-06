@@ -53,7 +53,7 @@ final class TodoListNotifierProvider
   }
 }
 
-String _$todoListNotifierHash() => r'bcf6d66a719a52cf8755d593e65f8c3f2517f16e';
+String _$todoListNotifierHash() => r'025645c7d02bfedf16de05b8a6fdba6196f51e35';
 
 /// Owns the [TodoListState]: fetching, searching and mutating todos.
 ///

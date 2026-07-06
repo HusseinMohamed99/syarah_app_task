@@ -14,6 +14,9 @@ abstract class TodoListState with _$TodoListState {
     @Default(TodoListStatus.initial) TodoListStatus status,
     @Default(<TodoModel>[]) List<TodoModel> todos,
     @Default('') String searchQuery,
+    @Default(1) int currentPage,
+    @Default(true) bool hasMore,
+    @Default(false) bool isLoadingMore,
     NetworkException? error,
   }) = _TodoListState;
 
@@ -21,6 +24,7 @@ abstract class TodoListState with _$TodoListState {
 
   bool get isLoading => status == TodoListStatus.loading;
   bool get hasError => status == TodoListStatus.error;
+  bool get isSearching => searchQuery.trim().isNotEmpty;
 
   /// Todos after applying the client-side title search.
   List<TodoModel> get filteredTodos {

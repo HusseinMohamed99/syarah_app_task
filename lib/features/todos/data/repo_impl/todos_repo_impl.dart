@@ -13,9 +13,13 @@ class TodosRepoImpl implements TodosRepo {
   final BaseApiClient _client;
 
   @override
-  Future<ApiResult<List<TodoModel>>> getTodos() {
+  Future<ApiResult<List<TodoModel>>> getTodos({
+    required int page,
+    required int limit,
+  }) {
     return _client.getRaw<List<TodoModel>>(
       AppConstants.todosEndpoint,
+      queryParameters: {'_page': page, '_limit': limit},
       fromJson: (data) => (data as List<dynamic>)
           .map((e) => TodoModel.fromDto(
                 TodoDto.fromJson(e as Map<String, dynamic>),

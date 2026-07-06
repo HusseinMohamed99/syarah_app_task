@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:syarah_app_task/core/config/app_constants.dart';
 import 'package:syarah_app_task/core/network/api_result.dart';
 import 'package:syarah_app_task/core/network/network_exception.dart';
 import 'package:syarah_app_task/features/todos/data/data_source/todos_data_source.dart';
@@ -14,22 +15,29 @@ part 'todo_list_notifier.g.dart';
 /// optimistically after a successful call instead of refetching.
 @riverpod
 class TodoListNotifier extends _$TodoListNotifier {
+  static const int _limit = AppConstants.todosPageLimit;
+
   @override
   TodoListState build() {
-    _fetchTodos();
+    _loadFirstPage();
     return const TodoListState(status: TodoListStatus.loading);
   }
 
   TodosRepo get _repo => ref.read(todosRepoProvider);
 
-  Future<void> _fetchTodos() async {
-    final result = await _repo.getTodos();
+  /// Loads page 1 and replaces the list. Surfaces a full-screen error when
+  /// nothing could be loaded.
+  Future<void> _loadFirstPage() async {
+    final result = await _repo.getTodos(page: 1, limit: _limit);
     if (!ref.mounted) return;
     switch (result) {
       case Success(:final data):
         state = state.copyWith(
           status: TodoListStatus.loaded,
           todos: data,
+          currentPage: 1,
+          hasMore: data.length >= _limit,
+          isLoadingMore: false,
           error: null,
         );
       case Failure(:final error):
@@ -43,11 +51,63 @@ class TodoListNotifier extends _$TodoListNotifier {
   /// Reloads from scratch, showing the skeleton again (used on retry).
   Future<void> retry() async {
     state = state.copyWith(status: TodoListStatus.loading, error: null);
-    await _fetchTodos();
+    await _loadFirstPage();
   }
 
-  /// Pull-to-refresh: keeps existing data visible while reloading.
-  Future<void> refresh() => _fetchTodos();
+  /// Pull-to-refresh: resets back to page 1, keeping existing data visible
+  /// until the fresh page arrives.
+  Future<void> refresh() async {
+    final result = await _repo.getTodos(page: 1, limit: _limit);
+    if (!ref.mounted) return;
+    switch (result) {
+      case Success(:final data):
+        state = state.copyWith(
+          status: TodoListStatus.loaded,
+          todos: data,
+          currentPage: 1,
+          hasMore: data.length >= _limit,
+          isLoadingMore: false,
+          error: null,
+        );
+      case Failure(:final error):
+        // Keep the current list if we still have one; only fail hard when
+        // there is nothing to show.
+        if (state.todos.isEmpty) {
+          state = state.copyWith(
+            status: TodoListStatus.error,
+            error: error,
+          );
+        }
+    }
+  }
+
+  /// Loads the next page and appends it. No-op while already loading, when
+  /// there are no more pages, or while the user is searching.
+  Future<void> loadMore() async {
+    if (state.isLoadingMore ||
+        !state.hasMore ||
+        state.isSearching ||
+        state.status != TodoListStatus.loaded) {
+      return;
+    }
+
+    state = state.copyWith(isLoadingMore: true);
+    final nextPage = state.currentPage + 1;
+    final result = await _repo.getTodos(page: nextPage, limit: _limit);
+    if (!ref.mounted) return;
+    switch (result) {
+      case Success(:final data):
+        state = state.copyWith(
+          todos: [...state.todos, ...data],
+          currentPage: nextPage,
+          hasMore: data.length >= _limit,
+          isLoadingMore: false,
+        );
+      case Failure():
+        // Stop the spinner; the user can scroll again to retry.
+        state = state.copyWith(isLoadingMore: false);
+    }
+  }
 
   /// Updates the client-side search query.
   void search(String query) {
