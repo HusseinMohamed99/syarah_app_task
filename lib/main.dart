@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syarah_app_task/core/routing/app_router.dart';
-import 'package:syarah_app_task/core/theming/themingManager/dark_theming.dart';
 import 'package:syarah_app_task/core/theming/themingManager/light_theming.dart';
 
 void main() {
@@ -23,8 +22,6 @@ class TodoApp extends ConsumerWidget {
         title: 'Todo App',
         debugShowCheckedModeBanner: false,
         theme: buildLightTheme(),
-        darkTheme: buildDarkTheme(),
-        themeMode: ThemeMode.system,
         routerConfig: router,
         builder: (context, child) => Directionality(
           textDirection: TextDirection.ltr,

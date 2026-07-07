@@ -11,13 +11,10 @@ class ColorManager {
 
   static const Color background = Color(0xFFF7F8FA);
   static const Color surface = Color(0xFFFFFFFF);
-  static const Color darkBackground = Color(0xFF121417);
-  static const Color darkSurface = Color(0xFF1D2126);
 
   static const Color textPrimary = Color(0xFF1A1C1E);
   static const Color textSecondary = Color(0xFF6B7280);
   static const Color textOnPrimary = Color(0xFFFFFFFF);
-  static const Color textOnDark = Color(0xFFECECEC);
 
   static const Color error = Color(0xFFD64545);
   static const Color success = Color(0xFF2E7D32);
