@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Central palette. All colors must be referenced through [ColorManager]
-/// — never raw `Colors.x` or `Color(0x..)` in feature code.
 class ColorManager {
   const ColorManager._();
 

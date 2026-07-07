@@ -7,7 +7,6 @@ import 'package:syarah_app_task/features/todos/presentation/views/todo_list_view
 
 part 'app_router.g.dart';
 
-/// Root route: the todo list, with add / edit as child routes.
 @TypedGoRoute<TodoListRoute>(
   path: AppPaths.todoList,
   routes: <TypedGoRoute<GoRouteData>>[
@@ -41,7 +40,6 @@ class EditTodoRoute extends GoRouteData with $EditTodoRoute {
       AddEditTodoView(todoId: id);
 }
 
-/// Exposes the app's [GoRouter] as a hand-written provider.
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: AppPaths.todoList,

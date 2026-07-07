@@ -4,10 +4,8 @@ import 'package:syarah_app_task/features/todos/data/model/todo_model.dart';
 
 part 'todo_list_state.freezed.dart';
 
-/// Lifecycle status of the todo list screen.
 enum TodoListStatus { initial, loading, loaded, error }
 
-/// Immutable UI state for the todo list.
 @freezed
 abstract class TodoListState with _$TodoListState {
   const factory TodoListState({
@@ -26,7 +24,6 @@ abstract class TodoListState with _$TodoListState {
   bool get hasError => status == TodoListStatus.error;
   bool get isSearching => searchQuery.trim().isNotEmpty;
 
-  /// Todos after applying the client-side title search.
   List<TodoModel> get filteredTodos {
     final query = searchQuery.trim().toLowerCase();
     if (query.isEmpty) return todos;
@@ -35,11 +32,9 @@ abstract class TodoListState with _$TodoListState {
         .toList();
   }
 
-  /// True when loading finished but there are no todos at all.
   bool get isEmpty =>
       status == TodoListStatus.loaded && todos.isEmpty;
 
-  /// True when there are todos but the current search matches none.
   bool get hasNoSearchResults =>
       status == TodoListStatus.loaded &&
       todos.isNotEmpty &&

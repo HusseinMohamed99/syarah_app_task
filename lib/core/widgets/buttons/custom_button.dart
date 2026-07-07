@@ -4,7 +4,6 @@ import 'package:syarah_app_task/core/helpers/dimensions/dimensions.dart';
 import 'package:syarah_app_task/core/theming/colorManager/color_manager.dart';
 import 'package:syarah_app_task/core/widgets/loading/adaptive_loading_indicator.dart';
 
-/// Primary call-to-action button used throughout the app.
 class CustomButton extends StatelessWidget {
   const CustomButton({
     required this.label,

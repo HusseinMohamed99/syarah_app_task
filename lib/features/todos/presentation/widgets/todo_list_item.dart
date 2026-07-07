@@ -5,8 +5,6 @@ import 'package:syarah_app_task/core/helpers/extensions/text_styles_extension.da
 import 'package:syarah_app_task/core/theming/colorManager/color_manager.dart';
 import 'package:syarah_app_task/features/todos/data/model/todo_model.dart';
 
-/// A single todo card with a colored status accent, an animated custom
-/// checkmark and a completed/pending badge. Swipe to delete, tap to edit.
 class TodoListItem extends StatelessWidget {
   const TodoListItem({
     required this.todo,
@@ -156,7 +154,6 @@ class TodoListItem extends StatelessWidget {
   }
 }
 
-/// Animated circular checkbox that fills and shows a check when completed.
 class _AnimatedCheck extends StatelessWidget {
   const _AnimatedCheck({
     required this.completed,
@@ -202,7 +199,6 @@ class _AnimatedCheck extends StatelessWidget {
   }
 }
 
-/// Small pill showing whether the todo is done or still pending.
 class _StatusBadge extends StatelessWidget {
   const _StatusBadge({required this.completed});
 
@@ -232,7 +228,6 @@ class _StatusBadge extends StatelessWidget {
   }
 }
 
-/// Subtle tag showing which user the todo belongs to.
 class _UserTag extends StatelessWidget {
   const _UserTag({required this.userId});
 

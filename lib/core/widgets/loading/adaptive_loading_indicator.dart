@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// Platform-aware spinner: Cupertino on iOS, Material elsewhere.
 class AdaptiveLoadingIndicator extends StatelessWidget {
   const AdaptiveLoadingIndicator({this.color, this.size, super.key});
 

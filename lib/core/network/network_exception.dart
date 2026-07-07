@@ -2,11 +2,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'network_exception.freezed.dart';
 
-/// Domain-level representation of a networking failure.
-///
-/// Offline state is inferred from a [SocketException] and surfaced as
-/// [NetworkException.noInternetConnection]; there is intentionally no
-/// separate connectivity service.
 @freezed
 sealed class NetworkException with _$NetworkException {
   const factory NetworkException.requestCancelled() = RequestCancelled;

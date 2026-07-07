@@ -3,8 +3,6 @@ import 'package:syarah_app_task/core/widgets/loading/app_skeleton.dart';
 import 'package:syarah_app_task/features/todos/data/model/todo_model.dart';
 import 'package:syarah_app_task/features/todos/presentation/widgets/todo_list_item.dart';
 
-/// Skeleton placeholder shown while the todo list is loading. Renders a
-/// handful of fake [TodoListItem]s under [AppSkeleton]'s shimmer.
 class TodoListSkeleton extends StatelessWidget {
   const TodoListSkeleton({this.itemCount = 8, super.key});
 

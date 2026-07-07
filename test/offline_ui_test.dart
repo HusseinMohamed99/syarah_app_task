@@ -8,8 +8,6 @@ import 'package:syarah_app_task/features/todos/data/model/todo_model.dart';
 import 'package:syarah_app_task/features/todos/domain/repo/todos_repo.dart';
 import 'package:syarah_app_task/main.dart';
 
-/// A repo that always fails as if the device were offline, used to drive the
-/// UI without touching the network.
 class _OfflineTodosRepo implements TodosRepo {
   @override
   Future<ApiResult<List<TodoModel>>> getTodos({
@@ -46,7 +44,6 @@ void main() {
       ),
     );
 
-    // Let the (immediately failing) fetch resolve and the UI rebuild.
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
 

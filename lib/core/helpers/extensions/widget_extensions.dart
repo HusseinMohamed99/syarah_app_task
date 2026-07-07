@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syarah_app_task/core/helpers/dimensions/dimensions.dart';
 
-/// Fluent layout helpers to keep widget trees flat and readable.
 extension WidgetExtensions on Widget {
   Widget allPadding({
     double vPadding = kSpacingL,

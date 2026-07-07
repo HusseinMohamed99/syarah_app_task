@@ -1,10 +1,3 @@
-/// Envelope wrapper for enveloped API responses of the shape
-/// `{ "status": bool, "message": String, "data": T }`.
-///
-/// jsonplaceholder returns raw (non-enveloped) payloads, so the todos
-/// feature uses the raw client methods instead; this type exists to keep
-/// the enveloped `get/post/put/delete/getList` methods faithful to the
-/// production conventions.
 class BaseResponse<T> {
   const BaseResponse({
     this.data,

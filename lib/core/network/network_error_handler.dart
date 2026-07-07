@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:syarah_app_task/core/network/network_exception.dart';
 
-/// Maps a low-level [DioException] onto the domain [NetworkException] union.
 class NetworkErrorHandler {
   const NetworkErrorHandler._();
 

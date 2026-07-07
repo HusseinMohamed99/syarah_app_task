@@ -1,10 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
-/// Navigation helpers layered on top of typed [GoRouteData] routes.
-///
-/// `safePush` guards against accidentally pushing the same route twice in
-/// quick succession (e.g. a double tap).
 extension RouteNavigationExtension on GoRouteData {
   static bool _isNavigating = false;
 

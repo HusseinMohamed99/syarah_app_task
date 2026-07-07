@@ -1,4 +1,3 @@
-/// Application-wide configuration constants.
 class AppConstants {
   const AppConstants._();
 
@@ -7,6 +6,5 @@ class AppConstants {
 
   static const String todosEndpoint = '/todos';
 
-  /// Number of todos fetched per page for infinite scroll.
   static const int todosPageLimit = 20;
 }

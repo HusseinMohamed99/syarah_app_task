@@ -6,7 +6,6 @@ import 'package:syarah_app_task/features/todos/data/dto/todo_request.dart';
 import 'package:syarah_app_task/features/todos/data/model/todo_model.dart';
 import 'package:syarah_app_task/features/todos/domain/repo/todos_repo.dart';
 
-/// Concrete [TodosRepo] backed by the raw jsonplaceholder endpoints.
 class TodosRepoImpl implements TodosRepo {
   const TodosRepoImpl(this._client);
 

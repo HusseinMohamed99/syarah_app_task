@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// Shared typography scale, tinted by [color] per theme brightness.
 TextTheme buildAppTextTheme(Color color) {
   return TextTheme(
     displayLarge: TextStyle(

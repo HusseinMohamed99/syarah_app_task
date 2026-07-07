@@ -2,7 +2,6 @@ import 'dart:developer' as developer;
 
 import 'package:dio/dio.dart';
 
-/// Lightweight request/response/error logger.
 class LoggingInterceptor extends Interceptor {
   @override
   void onRequest(

@@ -4,8 +4,6 @@ import 'package:syarah_app_task/core/helpers/dimensions/dimensions.dart';
 import 'package:syarah_app_task/core/helpers/extensions/text_styles_extension.dart';
 import 'package:syarah_app_task/core/theming/colorManager/color_manager.dart';
 
-/// Full-screen error state: a haloed error glyph, a message and a prominent
-/// retry pill.
 class CustomErrorWidget extends StatelessWidget {
   const CustomErrorWidget({
     required this.message,

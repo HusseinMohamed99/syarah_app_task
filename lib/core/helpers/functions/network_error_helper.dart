@@ -1,8 +1,5 @@
 import 'package:syarah_app_task/core/network/network_exception.dart';
 
-/// Pattern-matches a [NetworkException] into a user-facing Arabic string.
-///
-/// This project has no localization layer, so plain strings are used.
 String getNetworkErrorMessage(
   Object error, {
   String fallbackKey = 'Something went wrong. Please try again.',

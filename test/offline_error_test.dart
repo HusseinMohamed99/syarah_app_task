@@ -9,10 +9,6 @@ import 'package:syarah_app_task/core/network/network_exception.dart';
 import 'package:syarah_app_task/features/todos/data/model/todo_model.dart';
 import 'package:syarah_app_task/features/todos/data/repo_impl/todos_repo_impl.dart';
 
-// NOTE: this file intentionally contains no `testWidgets`. The Flutter test
-// binding installs an HTTP override that returns 400 for every real request,
-// which would mask the genuine SocketException we want to exercise here.
-
 void main() {
   group('NetworkErrorHandler offline mapping', () {
     test('connectionError maps to noInternetConnection', () {
@@ -45,9 +41,7 @@ void main() {
 
   test('a real request to an unreachable host surfaces '
       'noInternetConnection', () async {
-    // Point a real Dio at a host that cannot be resolved/reached so the
-    // actual client throws a genuine SocketException, exercising the whole
-    // BaseApiClient -> NetworkErrorHandler path end to end.
+
     final dio = Dio(
       BaseOptions(
         baseUrl: 'http://nonexistent.invalid',

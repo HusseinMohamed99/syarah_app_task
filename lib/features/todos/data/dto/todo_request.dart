@@ -2,7 +2,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'todo_request.g.dart';
 
-/// Request DTO for creating / updating a todo.
 @JsonSerializable(createFactory: false)
 class TodoRequest {
   const TodoRequest({

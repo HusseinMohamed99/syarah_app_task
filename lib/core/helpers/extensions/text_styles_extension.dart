@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Text style accessors backed by [Theme]'s `textTheme`. Feature code reads
-/// typography via these getters (e.g. `context.headingH5`) instead of
-/// touching `TextStyle` directly.
 extension TextStylesExtension on BuildContext {
   TextTheme get _textTheme => Theme.of(this).textTheme;
 

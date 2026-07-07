@@ -4,27 +4,10 @@ import 'package:syarah_app_task/core/network/base_response.dart';
 import 'package:syarah_app_task/core/network/network_error_handler.dart';
 import 'package:syarah_app_task/core/network/network_exception.dart';
 
-/// The single shared HTTP client wrapping one [Dio] instance.
-///
-/// In the production app this is annotated `@singleton`; here a single
-/// instance is guaranteed by exposing it through `baseApiClientProvider`.
-///
-/// Two response styles are supported:
-/// * Enveloped ([get]/[post]/[put]/[delete]/[getList]) which parse into a
-///   [BaseResponse] of `T`.
-/// * Raw ([getRaw]/[postRaw]/[putRaw]/[deleteRaw]) which return
-///   `fromJson(response.data)` directly — used for jsonplaceholder.
-///
-/// Every method funnels through [_guard], which converts thrown errors
-/// into an [ApiResult.failure].
 class BaseApiClient {
   const BaseApiClient(this._dio);
 
   final Dio _dio;
-
-  // ---------------------------------------------------------------------------
-  // Enveloped responses -> BaseResponse<T>
-  // ---------------------------------------------------------------------------
 
   Future<ApiResult<BaseResponse<T>>> get<T>(
     String path, {
@@ -101,10 +84,6 @@ class BaseApiClient {
     });
   }
 
-  // ---------------------------------------------------------------------------
-  // Raw / non-enveloped responses -> fromJson(response.data)
-  // ---------------------------------------------------------------------------
-
   Future<ApiResult<T>> getRaw<T>(
     String path, {
     required T Function(dynamic data) fromJson,
@@ -150,10 +129,6 @@ class BaseApiClient {
       return true;
     });
   }
-
-  // ---------------------------------------------------------------------------
-  // Guard
-  // ---------------------------------------------------------------------------
 
   Future<ApiResult<T>> _guard<T>(Future<T> Function() request) async {
     try {

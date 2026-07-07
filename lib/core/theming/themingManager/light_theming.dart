@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:syarah_app_task/core/theming/colorManager/color_manager.dart';
 import 'package:syarah_app_task/core/theming/themingManager/app_text_theme.dart';
 
-/// Light theme definition. Typography feeds the `context.*` text getters.
 ThemeData buildLightTheme() {
   const colorScheme = ColorScheme.light(
     primary: ColorManager.primary,

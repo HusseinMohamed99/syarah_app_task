@@ -20,7 +20,6 @@ import 'package:syarah_app_task/features/todos/presentation/helpers/todo_list_sk
 import 'package:syarah_app_task/features/todos/presentation/widgets/todo_list_item.dart';
 import 'package:syarah_app_task/features/todos/presentation/widgets/todo_search_field.dart';
 
-/// Route-level screen listing all todos with search and pull-to-refresh.
 class TodoListView extends ConsumerStatefulWidget {
   const TodoListView({super.key});
 
@@ -31,7 +30,6 @@ class TodoListView extends ConsumerStatefulWidget {
 class _TodoListViewState extends ConsumerState<TodoListView> {
   final _scrollController = ScrollController();
 
-  /// Distance from the bottom at which the next page is requested.
   static const double _loadMoreThreshold = 300;
 
   TodoListNotifier get _notifier =>
@@ -176,7 +174,6 @@ class _TodoListViewState extends ConsumerState<TodoListView> {
     );
   }
 
-  /// Wraps a non-list state so pull-to-refresh still works everywhere.
   Widget _refreshableSingle(Widget child) {
     return RefreshIndicator(
       onRefresh: _notifier.refresh,
@@ -193,8 +190,6 @@ class _TodoListViewState extends ConsumerState<TodoListView> {
   }
 }
 
-/// Small centered spinner shown at the bottom of the list while the next
-/// page is being fetched.
 class _BottomLoader extends StatelessWidget {
   const _BottomLoader();
 

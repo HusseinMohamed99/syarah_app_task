@@ -16,7 +16,6 @@ import 'package:syarah_app_task/core/widgets/missing_data/missing_data_view.dart
 import 'package:syarah_app_task/features/todos/data/model/todo_model.dart';
 import 'package:syarah_app_task/features/todos/presentation/controller/notifier/todo_list_notifier.dart';
 
-/// Route-level screen to add a new todo or edit/delete an existing one.
 class AddEditTodoView extends ConsumerStatefulWidget {
   const AddEditTodoView({this.todoId, super.key});
 

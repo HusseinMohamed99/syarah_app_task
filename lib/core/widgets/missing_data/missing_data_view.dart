@@ -4,8 +4,6 @@ import 'package:syarah_app_task/core/helpers/dimensions/dimensions.dart';
 import 'package:syarah_app_task/core/helpers/extensions/text_styles_extension.dart';
 import 'package:syarah_app_task/core/theming/colorManager/color_manager.dart';
 
-/// Generic empty-state view: a haloed icon, title, optional subtitle and
-/// action, laid out with a clear visual hierarchy.
 class MissingDataView extends StatelessWidget {
   const MissingDataView({
     required this.title,
@@ -58,7 +56,6 @@ class MissingDataView extends StatelessWidget {
   }
 }
 
-/// A soft, concentric-ring halo around a centered [icon].
 class _IconHalo extends StatelessWidget {
   const _IconHalo({required this.icon, required this.color});
 

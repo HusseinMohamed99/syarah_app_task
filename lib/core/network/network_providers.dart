@@ -4,8 +4,6 @@ import 'package:syarah_app_task/core/config/app_constants.dart';
 import 'package:syarah_app_task/core/network/interceptors/logging_interceptor.dart';
 import 'package:syarah_app_task/core/network/interceptors/retry_interceptor.dart';
 
-/// The single [Dio] instance used across the entire app. Hand-written DI
-/// provider — only one Dio ever exists.
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
     BaseOptions(

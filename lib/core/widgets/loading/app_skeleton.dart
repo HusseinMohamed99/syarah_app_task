@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:syarah_app_task/core/theming/colorManager/color_manager.dart';
 
-/// Thin wrapper over [Skeletonizer] so features present a consistent
-/// shimmer over placeholder data while [enabled] is true.
 class AppSkeleton extends StatelessWidget {
   const AppSkeleton({
     required this.child,

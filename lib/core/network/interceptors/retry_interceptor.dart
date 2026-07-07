@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
 
-/// Retries transient failures (timeouts / connection drops) a few times
-/// before giving up.
 class RetryInterceptor extends Interceptor {
   RetryInterceptor(this._dio, {this.maxRetries = 2});
 

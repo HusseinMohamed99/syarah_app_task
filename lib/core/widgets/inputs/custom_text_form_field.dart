@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syarah_app_task/core/helpers/dimensions/dimensions.dart';
 import 'package:syarah_app_task/core/theming/colorManager/color_manager.dart';
 
-/// Themed text field used across forms.
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     this.controller,

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:syarah_app_task/core/theming/colorManager/color_manager.dart';
 
-/// Visual category of a snackbar message.
 enum SnackBarType { success, error, info, warning }
 
-/// Shows a themed snackbar via `context.showSnackBar(...)`.
 extension SnackBarExtension on BuildContext {
   void showSnackBar({
     required String message,

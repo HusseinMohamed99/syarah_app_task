@@ -2,7 +2,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'todo_dto.g.dart';
 
-/// Response DTO mirroring a jsonplaceholder `/todos` item.
 @JsonSerializable()
 class TodoDto {
   const TodoDto({
