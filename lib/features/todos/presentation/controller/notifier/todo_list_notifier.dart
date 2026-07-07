@@ -24,6 +24,13 @@ class TodoListNotifier extends _$TodoListNotifier {
   Future<void> _loadFirstPage() async {
     final result = await _repo.getTodos(page: 1, limit: _limit);
     if (!ref.mounted) return;
+    _applyFirstPage(result);
+  }
+
+  void _applyFirstPage(
+    ApiResult<List<TodoModel>> result, {
+    bool keepDataOnError = false,
+  }) {
     switch (result) {
       case Success(:final data):
         state = state.copyWith(
@@ -35,10 +42,12 @@ class TodoListNotifier extends _$TodoListNotifier {
           error: null,
         );
       case Failure(:final error):
-        state = state.copyWith(
-          status: TodoListStatus.error,
-          error: error,
-        );
+        if (!keepDataOnError || state.todos.isEmpty) {
+          state = state.copyWith(
+            status: TodoListStatus.error,
+            error: error,
+          );
+        }
     }
   }
 
@@ -50,25 +59,7 @@ class TodoListNotifier extends _$TodoListNotifier {
   Future<void> refresh() async {
     final result = await _repo.getTodos(page: 1, limit: _limit);
     if (!ref.mounted) return;
-    switch (result) {
-      case Success(:final data):
-        state = state.copyWith(
-          status: TodoListStatus.loaded,
-          todos: data,
-          currentPage: 1,
-          hasMore: data.length >= _limit,
-          isLoadingMore: false,
-          error: null,
-        );
-      case Failure(:final error):
-
-        if (state.todos.isEmpty) {
-          state = state.copyWith(
-            status: TodoListStatus.error,
-            error: error,
-          );
-        }
-    }
+    _applyFirstPage(result, keepDataOnError: true);
   }
 
   Future<void> loadMore() async {
